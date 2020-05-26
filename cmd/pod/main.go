@@ -50,7 +50,10 @@ func main() {
 	}
 
 	for _, pod := range podList.Items {
-		fmt.Println(pod.Annotations)
+		if pod.Annotations == nil {
+			pod.Annotations = make(map[string]string)
+		}
+
 		if _, ok := pod.Annotations["hello"]; !ok {
 			pod.Annotations["hello"] = "world"
 			pod, err := client.
